@@ -1,0 +1,61 @@
+#uni_table{
+  width: 95%;
+  background: #fff;
+  padding: 30px;
+}
+
+#uni_table th{ 
+}
+#uni_table th,td{ 
+  vertical-align: middle;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+#uni_table td img{
+  vertical-align: middle;
+}
+
+.uni_add_field_elem{
+  margin: 0 20px;
+}
+
+.uni_add_field_url{
+  margin-right: 20px;
+}
+.uni_add_field_alt{
+  margin-left: 20px;
+}
+
+.delete{
+  background: red;
+  color: #fff;
+  padding: 5px;
+  text-align: center;
+}
+
+.btn_list{
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.media-upload{
+  display: inline-block;
+  padding: 5px;
+  color: #555;
+  border-color: #ccc;
+  background: #f7f7f7;
+  box-shadow: 0 1px 0 #ccc;
+  text-decoration: none;
+}
+
+.field_data .uni_add_field_date_start,.uni_add_field_date_end{
+  max-width: 100px;
+}
+.field_data .uni_add_field_link{
+  max-width: 100%;
+}
+.field_data .uni_add_field_alt{
+  max-width: 100%;
+}
