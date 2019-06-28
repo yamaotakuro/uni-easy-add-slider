@@ -186,7 +186,6 @@ class AddSliderField{
         //削除
         $(document).on('click','.delete',function(){
           $(this).parents('tr').remove();
-          setting_update('delete');
         });
       
       });
