@@ -10,6 +10,7 @@ Author: Takuro Yamao
 Version: 1.0
 */
 
+
 add_action('init', 'AddSliderField::init');
 
 class AddSliderField{
@@ -26,7 +27,7 @@ class AddSliderField{
       add_action('wp_ajax_uni_add_field_update_options', [$this, 'update_options']);
     }
   }
-  
+
   // メニューを追加する
   public function uni_add_slider_pages(){
     add_menu_page(
@@ -38,7 +39,7 @@ class AddSliderField{
       plugins_url( 'images/smile.png', __FILE__ )
     );
   }
-  
+
 
   //管理画面でのJS読み込み
   public function admin_load_scripts() {
@@ -55,14 +56,14 @@ class AddSliderField{
     wp_enqueue_style('UI' , plugin_dir_url(__FILE__) .'css/jquery-ui.min.css');
     wp_enqueue_style('uni_add_field' , plugin_dir_url(__FILE__) .'css/uni_add_field.css');
   }
-  
+
   //管理画面のJSの実行
   public function admin_script(){
     ?>
     <script>
     (function($){
       $(function(){
-        
+
         //jQueryUIのsortable呼び出し
         $('#uni_table tbody').sortable();
 
@@ -94,7 +95,7 @@ class AddSliderField{
           });
           $(this).datepicker('show');
         });
-        
+
         $(document).on('click', '.uni_add_field_date_end', function(){
           $(this).datepicker({
             changeYear: true,
@@ -118,14 +119,14 @@ class AddSliderField{
               if (imgUrl === undefined) {
                 imgUrl = $(html).attr("src");
               }
-              
+
               input.val(imgUrl);//.after('<img src="'+imgUrl+'" >');//値をセット
               image.attr('src',imgUrl);//srcを上書き
               tb_remove();
             }
             tb_show(null, 'media-upload.php?post_id=0&type=image&TB_iframe=true');
             return false;
-        }); 
+        });
 
         //カラム追加用
         $('#add_calumn').on('click',function(){
@@ -147,7 +148,7 @@ class AddSliderField{
               tr +=  '</tr>';
           $('#uni_table tbody').append(tr);
         });
-        
+
         //設定ページでのAjax(保存する)
         function setting_update(type){
           var slideObj ={};
@@ -160,7 +161,7 @@ class AddSliderField{
             var endVal = $(this).find('.uni_add_field_date_end').val();
             var blankVal = $(this).find('.uni_add_field_blank').prop('checked')
             arr.push(urlVal,altVal,linkVal,startVal,endVal,blankVal);
-            slideObj[i] = arr;   
+            slideObj[i] = arr;
           });
 
           $.ajax({
@@ -187,11 +188,11 @@ class AddSliderField{
         $(document).on('click','.delete',function(){
           $(this).parents('tr').remove();
         });
-      
+
       });
     })(jQuery);
 
-    
+
 
   </script>
   <?php
@@ -216,7 +217,7 @@ class AddSliderField{
   <h2>トップページのスライド用</h2>
 
   <form method="post" action="">
-  
+
     <table id="uni_table">
       <tbody>
       <?php foreach((array)$uni_custum_fields as $k => $v) : ?>
@@ -224,7 +225,7 @@ class AddSliderField{
           <th><?php echo $k;?></th>
           <td>
           <input type="hidden" name="uni_add_field[<?php echo $k;?>][url]" class="uni_add_field_url" id="uni_add_field_url<?php echo $k;?>" value="<?php echo $v[0];?>" />
-          <a class="media-upload" href="JavaScript:void(0);" rel="uni_add_field<?php echo $k;?>">画像選択</a> 
+          <a class="media-upload" href="JavaScript:void(0);" rel="uni_add_field<?php echo $k;?>">画像選択</a>
           <img src="<?php echo $this->get_attachment_image_src($v[0], 'thumbnail') ;?>" style="width:150px;" class="uni_add_field_elem">
           <input type="text" name="uni_add_field[<?php echo $k;?>][alt]" class="uni_add_field_alt" id="uni_add_field_alt<?php echo $k;?>" value="<?php echo $v[1];?>" placeholder="altを入力">
           <input type="text" name="uni_add_field[<?php echo $k;?>][link]" class="uni_add_field_link" id="uni_add_field_link<?php echo $k;?>" value="<?php echo $v[2];?>" placeholder="リンクURLを入力">
@@ -238,18 +239,18 @@ class AddSliderField{
           </td>
         </tr>
         <?php endforeach; ?>
-      </tbody> 
-      
+      </tbody>
+
     </table>
     <ul class="btn_list">
       <li><input type="button" class="button button-primary" value="保存" id="field_update" name="update"></li>
       <li><input type="button" class="button button-primary" value="カラム追加" id="add_calumn"></li>
     </ul>
-    
+
   </form>
   <?php
   }
-  
+
   /**
    * 画像のURLからattachemnt_idを取得する
    *
@@ -262,7 +263,7 @@ class AddSliderField{
     $sql = "SELECT ID FROM {$wpdb->posts} WHERE guid = %s";
       $post_name = $url;
       $id = (int)$wpdb->get_var($wpdb->prepare($sql, $post_name));
-    
+
       if($id == 0){
       $sql = "SELECT ID FROM {$wpdb->posts} WHERE post_name = %s";
       preg_match('/([^\/]+?)(-e\d+)?(-\d+x\d+)?(\.\w+)?$/', $url, $matches);
@@ -274,13 +275,13 @@ class AddSliderField{
 
   /**
    * 画像のURLのサイズ違いのURLを取得する
-   * 
+   *
    * @param string $url 画像のURL
    * @param string $size 画像のサイズ (thumbnail, medium, large or full)
-   */ 
+   */
   public function get_attachment_image_src($url, $size) {
     $image = wp_get_attachment_image_src($this->get_attachment_id(esc_url($url)), $size);
-    
+
     return $image[0];
   }
 }
